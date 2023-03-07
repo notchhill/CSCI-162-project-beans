@@ -1,1 +1,1 @@
-beans
+print('Hello world!')
