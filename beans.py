@@ -13,7 +13,7 @@ pygame.init()
 
 # set up the window
 
-screen = pygame.display.set_mode((400, 300))
+screen = pygame.display.set_mode((800, 600))
 
 pygame.display.set_caption('Pygame window')
 
@@ -43,19 +43,25 @@ class character(pygame.sprite.Sprite):
         self.rect.center = (200, 150)
         self.velocity = 0
         
+       
+        
+        self.flying_object_counter = 0  # counter for creating flying objects
+        self.flying_object_wave_count = 0  # current number of flying objects
+        self.flying_object_threshold = 5 * self.flying_object_wave_count  # maximum number of flying objects
+        
         self.flying_objects = pygame.sprite.Group()
 
     def move_up(self):
-        self.rect.centery -= 3
+        self.rect.centery -= 4
 
     def move_down(self):
-        self.rect.centery += 3
+        self.rect.centery += 4
 
     def move_left(self):
-        self.rect.centerx -= 3
+        self.rect.centerx -= 9
 
     def move_right(self):
-        self.rect.centerx += 3
+        self.rect.centerx += 4
 
     def gravity(self):
         
@@ -67,17 +73,32 @@ class character(pygame.sprite.Sprite):
         self.rect.centery += self.velocity
         
         
-    def create_flying_object(self):
-        # create a new flying object
-        flying_object = pygame.sprite.Sprite()
-        flying_object.image = pygame.Surface((3, 3))
-        flying_object.image.fill((0, 255, 0))
-        flying_object.rect = flying_object.image.get_rect()
-        flying_object.rect.x = 800
-        flying_object.rect.y = random.randint(0, 400)
         
-        # add the flying object to the group
-        self.flying_objects.add(flying_object)
+        
+    def create_flying_object(self):
+        if self.flying_object_counter % 50 <= self.flying_object_wave_count:
+                        # create a new flying object using bean.png
+            flying_object = pygame.sprite.Sprite()
+            flying_object.image = pygame.image.load("bean.jpg").convert_alpha() # load the image
+            
+            
+            resized_image = pygame.transform.scale(flying_object.image, (40, 30)) # resize the image
+            flying_object.image = resized_image
+            
+            flying_object.rect = flying_object.image.get_rect()
+            flying_object.rect.x = 800
+            flying_object.rect.y = random.randint(0, 800)
+            
+            # add the flying object to the group
+            self.flying_objects.add(flying_object)
+            print(self.flying_object_wave_count)
+            
+            
+            #prints counter
+       # print(self.flying_object_counter)
+        
+        
+        
         
     def update_flying_objects(self):
         # update the position of the flying objects
@@ -92,8 +113,19 @@ class character(pygame.sprite.Sprite):
             if flying_object.rect.x < -30:
                 self.flying_objects.remove(flying_object)
 
+
+
+
+
 # create character instance
 my_character = character()
+
+font = pygame.font.Font('freesansbold.ttf', 12)
+
+
+
+
+
 
 # initialize movement flags
 move_up = False
@@ -165,17 +197,25 @@ while True:
         gravity = False
         
     my_character.create_flying_object()
+    my_character.create_flying_object()
     my_character.update_flying_objects()
+    
+    my_character.flying_object_counter += 2
+    
+    if my_character.flying_object_counter % 200 <= my_character.flying_object_wave_count :
+        my_character.flying_object_wave_count += 1
+        
         
     # draw everything
+    text = font.render(str(my_character.flying_object_wave_count), True, (255, 255, 255))
     screen.blit(background, (0, 0))
     screen.blit(my_character.image, my_character.rect)
     for flying_object in my_character.flying_objects:
         screen.blit(flying_object.image, flying_object.rect)
+    screen.blit(text, (0, 0))
     pygame.display.flip()
     
     # update the clock
     clock.tick(FPS)
     
     
-
