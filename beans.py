@@ -91,7 +91,6 @@ class character(pygame.sprite.Sprite):
             
             # add the flying object to the group
             self.flying_objects.add(flying_object)
-            print(self.flying_object_wave_count)
             
             
             #prints counter
@@ -138,7 +137,7 @@ gravity = True
 clock = pygame.time.Clock()
 
 # set the desired frame rate
-FPS = 20
+FPS = 60
 
 def jump(character):
     if character.rect.bottom == screen.get_rect().bottom:
@@ -202,8 +201,12 @@ while True:
     
     my_character.flying_object_counter += 2
     
-    if my_character.flying_object_counter % 200 <= my_character.flying_object_wave_count :
+    if my_character.flying_object_counter % 200 == 0 :
         my_character.flying_object_wave_count += 1
+            
+         
+        
+        
         
         
     # draw everything
@@ -217,5 +220,8 @@ while True:
     
     # update the clock
     clock.tick(FPS)
+    
+    
+
     
     
