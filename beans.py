@@ -130,11 +130,10 @@ class character(pygame.sprite.Sprite):
             # check for collision with the player
             if pygame.sprite.collide_rect(flying_object, self):
                 reset()
-                
-            # remove the flying object if it goes off the screen
-            if flying_object.rect.x < -30:
+  
+# remove the flying object if it goes off the screen
+            if flying_object.rect.x < -100:
                 self.flying_objects.remove(flying_object)
-
 
 
 
