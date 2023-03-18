@@ -29,6 +29,16 @@ pygame.display.flip()
 # character is a circle object
 
 def reset():
+    #deletes highscore file if wave count is higher than the highscore
+    with open("highscore.txt", "r") as f:
+        highscore = int(f.read())
+        if my_character.flying_object_wave_count > highscore:
+            f = open("highscore.txt", "w")
+            f.write(str(my_character.flying_object_wave_count))
+            f.close()
+        f.close()
+        
+        
     #resets game to beggining
     my_character.flying_object_wave_count = 0
     my_character.flying_object_counter = 0
