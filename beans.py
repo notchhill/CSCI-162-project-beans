@@ -1,9 +1,3 @@
-# makes a window with pygame
-# with movable character
-
-# Path: character.py
-# makes a character with pygame
-
 import random
 import pygame
 from pygame.locals import *
@@ -34,6 +28,16 @@ pygame.display.flip()
 # create character function
 # character is a circle object
 
+def reset():
+    #resets game to beggining
+    my_character.flying_object_wave_count = 0
+    my_character.flying_object_counter = 0
+    my_character.flying_object_threshold = 5 * my_character.flying_object_wave_count
+    my_character.flying_objects = pygame.sprite.Group()
+    my_character.rect.centerx = 100
+    my_character.rect.centery = 100
+    my_character.velocity = 0
+
 class character(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -58,7 +62,7 @@ class character(pygame.sprite.Sprite):
         self.rect.centery += 4
 
     def move_left(self):
-        self.rect.centerx -= 9
+        self.rect.centerx -= 6.5
 
     def move_right(self):
         self.rect.centerx += 4
@@ -79,10 +83,23 @@ class character(pygame.sprite.Sprite):
         if self.flying_object_counter % 50 <= self.flying_object_wave_count:
                         # create a new flying object using bean.png
             flying_object = pygame.sprite.Sprite()
-            flying_object.image = pygame.image.load("bean.jpg").convert_alpha() # load the image
+            
+            #randomly selects one of the 2 images
+            
+            if random.randint(0, 1) == 0:
+                flying_object.image = pygame.image.load("bean.jpg").convert_alpha()
+                resized_image = pygame.transform.scale(flying_object.image, (45, 30)) # resize the image
+                
+                
+            else:
+                flying_object.image = pygame.image.load("bean2.jpg").convert_alpha()
+                resized_image = pygame.transform.scale(flying_object.image, (100, 60)) # resize the image
             
             
-            resized_image = pygame.transform.scale(flying_object.image, (40, 30)) # resize the image
+            
+            resized_image = pygame.transform.rotate(resized_image, random.randint(0, 4) * 90)
+                
+                
             flying_object.image = resized_image
             
             flying_object.rect = flying_object.image.get_rect()
@@ -91,10 +108,6 @@ class character(pygame.sprite.Sprite):
             
             # add the flying object to the group
             self.flying_objects.add(flying_object)
-            
-            
-            #prints counter
-       # print(self.flying_object_counter)
         
         
         
@@ -106,7 +119,7 @@ class character(pygame.sprite.Sprite):
             
             # check for collision with the player
             if pygame.sprite.collide_rect(flying_object, self):
-                pygame.quit()
+                reset()
                 
             # remove the flying object if it goes off the screen
             if flying_object.rect.x < -30:
@@ -201,7 +214,7 @@ while True:
     
     my_character.flying_object_counter += 2
     
-    if my_character.flying_object_counter % 200 == 0 :
+    if my_character.flying_object_counter % 2000 == 0 :
         my_character.flying_object_wave_count += 1
             
          
@@ -221,8 +234,6 @@ while True:
     # update the clock
     clock.tick(FPS)
     
-    
-
-    #https://prod.liveshare.vsengsaas.visualstudio.com/join?962591F67DEDF6180B2990D5A314DD118142
+#reset function
     
     #pygame install command: python -m pip install -U pygame==2.3.0 --user
