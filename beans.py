@@ -169,6 +169,14 @@ def jump(character):
     if character.rect.bottom == screen.get_rect().bottom:
         character.velocity = -10
 
+
+# loading music file
+mixer.music.load('song.mp3')
+# setting volume
+mixer.music.set_volume(0.3)
+mixer.music.play()
+
+        
 # event loop
 while True:
     # character movement and window close
