@@ -2,6 +2,12 @@ import random
 import pygame
 from pygame.locals import *
 
+# importing audio mixer
+from pygame import mixer 
+
+# initializing audio mixer
+
+mixer.init()
 
 pygame.init()
 
