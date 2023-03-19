@@ -69,7 +69,7 @@ class character(pygame.sprite.Sprite):
         self.rect.centery -= 4
 
     def move_down(self):
-        self.rect.centery += 4
+        self.rect.centery += 4 
 
     def move_left(self):
         self.rect.centerx -= 6.5
