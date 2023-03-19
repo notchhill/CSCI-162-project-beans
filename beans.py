@@ -11,6 +11,8 @@ screen = pygame.display.set_mode((800, 600))
 
 pygame.display.set_caption('Garbanzo Beanz')
 
+bg = pygame.image.load('kitchenLandscape.png')
+
 # fill background
 
 background = pygame.Surface(screen.get_size())
@@ -245,7 +247,7 @@ while True:
         
     # draw everything
     text = font.render(str(my_character.flying_object_wave_count), True, (255, 255, 255))
-    screen.blit(background, (0, 0))
+    screen.blit(bg, (0, 0))
     screen.blit(my_character.image, my_character.rect)
     for flying_object in my_character.flying_objects:
         screen.blit(flying_object.image, flying_object.rect)
