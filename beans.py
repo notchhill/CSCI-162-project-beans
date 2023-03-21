@@ -60,7 +60,8 @@ class character(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((5, 5))
-        self.image.fill((255, 0, 0))
+        self.image = pygame.image.load("angryChef.png").convert_alpha()
+        self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
         self.rect.center = (200, 150)
         self.velocity = 0
