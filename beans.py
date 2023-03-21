@@ -33,8 +33,22 @@ screen.blit(background, (0, 0))
 
 pygame.display.flip()
 
-# create character function
-# character is a circle object
+class TitleScreen:
+    def __init__(self):
+        self.font = pygame.font.Font('freesansbold.ttf', 32)
+        self.title_text = self.font.render('Garbanzo Beanz', True, (255, 255, 255))
+        self.title_rect = self.title_text.get_rect(center=(400, 200))
+        self.button_text = self.font.render('Press any key to Start', True, (255, 255, 255))
+        self.button_rect = self.button_text.get_rect(center=(400, 400))
+
+    def draw(self, screen):
+        screen.blit(self.title_text, self.title_rect)
+        #pygame.draw.rect(screen, (255, 255, 255), self.button_rect, 3)
+        screen.blit(self.button_text, self.button_rect)
+
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            return 'start game'
 
 def reset():
     #deletes highscore file if wave count is higher than the highscore
@@ -198,7 +212,8 @@ while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
-        elif event.type == KEYDOWN:
+            
+        if event.type == KEYDOWN:
             if event.key == K_UP:
                 move_up = True
             elif event.key == K_DOWN:
@@ -218,6 +233,16 @@ while True:
                 move_left = False
             elif event.key == K_RIGHT:
                 move_right = False
+                
+                
+        if game_state == 'title':
+            title_screen = TitleScreen()
+            if title_screen.handle_event(event) == 'start game':
+                game_state = 'main game loop'
+
+        elif game_state == 'main game loop':
+            # handle game events and update game state
+            pass
 
     # move the character
     if(my_character.rect.top > 0):
@@ -258,18 +283,19 @@ while True:
         
         
         
-    # draw everything
-    text = font.render(str(my_character.flying_object_wave_count), True, (255, 255, 255))
-    screen.blit(bg, (0, 0))
-    screen.blit(my_character.image, my_character.rect)
-    for flying_object in my_character.flying_objects:
-        screen.blit(flying_object.image, flying_object.rect)
-    screen.blit(text, (0, 0))
+    screen.blit(background, (0, 0))
+    if game_state == 'title':
+        title_screen.draw(screen)
+    elif game_state == 'main game loop':
+        text = font.render(str(my_character.flying_object_wave_count), True, (255, 255, 255))
+        screen.blit(bg, (0, 0))
+        screen.blit(my_character.image, my_character.rect)
+        for flying_object in my_character.flying_objects:
+            screen.blit(flying_object.image, flying_object.rect)
+        screen.blit(text, (0, 0))
+        pass
+    
     pygame.display.flip()
     
     # update the clock
     clock.tick(FPS)
-    
-#reset function
-    
-    #pygame install command: python -m pip install -U pygame==2.3.0 --user
