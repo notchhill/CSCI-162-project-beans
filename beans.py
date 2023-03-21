@@ -99,13 +99,14 @@ class character(pygame.sprite.Sprite):
         
         
         
+        
     def create_flying_object(self):
         if self.flying_object_counter % 50 <= self.flying_object_wave_count:
                         # create a new flying object using bean.png
             flying_object = pygame.sprite.Sprite()
             
             #randomly selects one of the images for enemy beans things that you dodge
-            ran = random.randint(0,2)
+            ran = random.randint(0,3)
             if ran == 0:
                 flying_object.image = pygame.image.load("bean.jpg").convert_alpha()
                 resized_image = pygame.transform.scale(flying_object.image, (45, 30)) # resize the image
@@ -118,6 +119,10 @@ class character(pygame.sprite.Sprite):
             elif ran == 2:
                 flying_object.image = pygame.image.load("bean3.jpg").convert_alpha()
                 resized_image = pygame.transform.scale(flying_object.image, (40, 50)) # resize the image
+
+            elif ran == 3:
+                flying_object.image = pygame.image.load("bean4.jpg").convert_alpha()
+                resized_image = pygame.transform.scale(flying_object.image, (70,50)) # resizing image
             
             
             
