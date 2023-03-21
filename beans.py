@@ -56,12 +56,13 @@ def reset():
     my_character.rect.centery = 100
     my_character.velocity = 0
 
+
 class character(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((5, 5))
         self.image = pygame.image.load("angryChef.png").convert_alpha()
-        self.image = pygame.transform.scale(self.image, (100, 100))
+        self.image = pygame.transform.scale(self.image, (25,25))
         self.rect = self.image.get_rect()
         self.rect.center = (200, 150)
         self.velocity = 0
