@@ -35,13 +35,15 @@ pygame.display.flip()
 
 class TitleScreen:
     def __init__(self):
-        self.font = pygame.font.Font('freesansbold.ttf', 32)
-        self.title_text = self.font.render('Garbanzo Beanz', True, (255, 255, 255))
+        self.font = pygame.font.Font('freesansbold.ttf', 40)
+        self.title_text = self.font.render('Garbanzo Beanz', True, (0, 0, 0))
         self.title_rect = self.title_text.get_rect(center=(400, 200))
-        self.button_text = self.font.render('Press any key to Start', True, (255, 255, 255))
+        self.button_text = self.font.render('Press any key to Start', True, (0, 0, 0))
         self.button_rect = self.button_text.get_rect(center=(400, 400))
 
     def draw(self, screen):
+        backgroundTitle  = pygame.image.load('title.jpg').convert()
+        screen.blit(backgroundTitle, (0,0))
         screen.blit(self.title_text, self.title_rect)
         #pygame.draw.rect(screen, (255, 255, 255), self.button_rect, 3)
         screen.blit(self.button_text, self.button_rect)
