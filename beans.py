@@ -2,6 +2,7 @@ import random
 import pygame
 from pygame.locals import *
 
+
 # importing audio mixer
 from pygame import mixer 
 
@@ -32,6 +33,7 @@ background.fill((0, 0, 0))
 screen.blit(background, (0, 0))
 
 pygame.display.flip()
+
 
 class TitleScreen:
     def __init__(self):
