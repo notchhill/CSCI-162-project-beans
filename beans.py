@@ -209,6 +209,7 @@ mixer.music.load('song.mp3')
 mixer.music.set_volume(0.3)
 mixer.music.play()
 
+game_state = "title"
         
 # event loop
 while True:
@@ -237,7 +238,8 @@ while True:
                 move_left = False
             elif event.key == K_RIGHT:
                 move_right = False
-                
+        
+        # handle events for the title screen
                 
         if game_state == 'title':
             title_screen = TitleScreen()
@@ -274,7 +276,6 @@ while True:
         gravity = False
         
     my_character.create_flying_object()
-    my_character.create_flying_object()
     my_character.update_flying_objects()
     
     my_character.flying_object_counter += 2
@@ -289,6 +290,7 @@ while True:
         
     screen.blit(background, (0, 0))
     if game_state == 'title':
+        title_screen = TitleScreen()
         title_screen.draw(screen)
     elif game_state == 'main game loop':
         text = font.render(str(my_character.flying_object_wave_count), True, (255, 255, 255))
