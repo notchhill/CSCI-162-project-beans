@@ -34,6 +34,7 @@ screen.blit(background, (0, 0))
 
 pygame.display.flip()
 
+game_state = 'title'
 
 class TitleScreen:
     def __init__(self):
@@ -51,8 +52,11 @@ class TitleScreen:
         screen.blit(self.button_text, self.button_rect)
 
     def handle_event(self, event):
-        if event.type == pygame.KEYDOWN:
+        #if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             return 'start game'
+        
+
 
 def reset():
     #deletes highscore file if wave count is higher than the highscore
@@ -167,6 +171,7 @@ class character(pygame.sprite.Sprite):
             # check for collision with the player
             if pygame.sprite.collide_rect(flying_object, self):
                 reset()
+            
   
 # remove the flying object if it goes off the screen
             if flying_object.rect.x < -100:
@@ -208,11 +213,10 @@ mixer.music.load('song.mp3')
 # setting volume
 mixer.music.set_volume(0.3)
 mixer.music.play()
-
-game_state = "title"
         
 # event loop
 while True:
+    print(game_state)
     # character movement and window close
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -240,6 +244,7 @@ while True:
                 move_right = False
         
         # handle events for the title screen
+        
                 
         if game_state == 'title':
             title_screen = TitleScreen()
@@ -280,7 +285,7 @@ while True:
     
     my_character.flying_object_counter += 2
     
-    if my_character.flying_object_counter % 2000 == 0 :
+    if my_character.flying_object_counter % 200 == 0 :
         my_character.flying_object_wave_count += 1
             
          
